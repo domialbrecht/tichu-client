@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap');
+@import url('./util/scroll-animations.css');
+@import url('./util/scrollbar.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Responsive blocker */
+
+/*@media (max-width: 1450px) {
+  #app {
+    display: none;
+  }
+  body::after {
+    content: "Sorry, responsive no i arbeit! ;)";
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 100px;
+  }
+}*/
+
+html,
+body,
+#app {
+  @apply font-sans;
+  background-color: #f2ecbc;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  min-height: 100vh;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex-grow: 1;
+}
+
+.playing-card-container {
+  position: relative;
+  width: 100%;
+  padding-top: 144.97%;
+  /* 169: 245 Aspect Ratio */
+}
+
+.playing-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+#nprogress {
+  pointer-events: none;
+}
+
+#nprogress .bar {
+  @apply bg-teal-600 opacity-75;
+  position: fixed;
+  z-index: 1031;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+}
+
+.gradient-main {
+  background-color: #f2ecbc;
+  background-image: linear-gradient(0deg, #f2ecbc 0%, #cae8ba 100%);
+}
+
+.btn {
+  @apply px-4 py-1 rounded inline-block bg-teal-600 text-dark cursor-pointer hover:bg-teal-700 disabled:cursor-default disabled:bg-gray-600 disabled:opacity-50;
+}
+
+.icon-btn {
+  @apply inline-block cursor-pointer select-none opacity-75 transition duration-200 ease-in-out hover:opacity-100 hover:text-teal-600;
+  font-size: 0.9em;
+}
+
+.heroButton {
+  @apply rounded-3xl;
+}
+
+.heroButton .heroButtonOverlay {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  @apply bg-emerald-700;
+  @apply rounded-3xl;
+  transform: scaleX(0);
+  transform-origin: 100% 100%;
+  transition: transform 0.4s cubic-bezier(0.53, 0.21, 0, 1);
+  will-change: transform;
+}
+
+.heroButton:hover .heroButtonOverlay {
+  transform-origin: 0 0;
+  transform: scaleX(1);
+}
