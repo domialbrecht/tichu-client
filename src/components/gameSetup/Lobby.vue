@@ -39,12 +39,19 @@ export default defineComponent({
       clientIsHost.value = true
       nameInput.value = name
       serverConnect(name, clientIsHost.value, '')
+      socket.emit('create-lobby', name)
     }
     const onJoin = (name: string) => {
       if (joinKey.value) {
         nameInput.value = name
-        console.log(`name: ${name}`)
-        serverConnect(name, false, joinKey.value)
+        socket.connect()
+        const data = {
+          username: name,
+          game_id: joinKey.value
+        }
+        console.log(data)
+        socket.emit('connect-lobby', data)
+        //serverConnect(name, false, joinKey.value)
       }
     }
     const onStart = () => {
@@ -60,17 +67,12 @@ export default defineComponent({
         enableWise: hostSettings.value.enableWise
       })
     })
-    socket.on('players', (sp) => {
-      const newPlayers = sp.map((p: { id: any; name: any; isHost: any; place: any }) => {
-        return {
-          self: socket.id === p.id,
-          isHost: p.isHost,
-          id: p.id,
-          name: p.name,
-          place: p.place
-        }
-      })
-      players.value = newPlayers
+    socket.on('lobby-created', (key: string) => {
+      joinKey.value = `${window.location.origin}/game?key=${key}`
+      setupComplete.value = true
+    })
+    socket.on('users-in-lobby', (sp) => {
+      console.log(`sp: ${sp}`)
       setupComplete.value = true
     })
     socket.on('initialSettings', (settings) => {
