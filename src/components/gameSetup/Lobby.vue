@@ -21,16 +21,13 @@ export default defineComponent({
     const p: IPlayer[] = []
     const players = ref(p)
     const hostSettings = ref<IHostSetting>({
-      winAmount: 200,
-      enableWise: true
+      winAmount: 1000
     })
     const socket: Socket = inject('socket')!
     const setupComplete = ref(false)
     onBeforeMount(() => {
       if (props.jkey) joinKey.value = props.jkey
     })
-    // onMounted(() => { mounted = true })
-    // onBeforeUnmount(() => { mounted = false })
     const serverConnect = (username: string, host: boolean, key: string) => {
       socket.auth = { username, host, key }
       socket.connect()
@@ -49,7 +46,6 @@ export default defineComponent({
           username: name,
           game_id: joinKey.value
         }
-        console.log(data)
         socket.emit('connect-lobby', data)
         //serverConnect(name, false, joinKey.value)
       }
@@ -60,25 +56,45 @@ export default defineComponent({
     socket.on('started', () => {
       emit('gstart', players.value)
     })
-    socket.on('hosted', (key: string) => {
-      joinKey.value = `${window.location.origin}/game?key=${key}`
-      socket.emit('settingChanged', {
-        winAmount: hostSettings.value.winAmount,
-        enableWise: hostSettings.value.enableWise
-      })
-    })
     socket.on('lobby-created', (key: string) => {
       joinKey.value = `${window.location.origin}/game?key=${key}`
+      const player = {
+        self: true,
+        isHost: true,
+        id: socket.id,
+        name: nameInput.value,
+        place: 0
+      }
+      players.value.push(player)
       setupComplete.value = true
     })
-    socket.on('users-in-lobby', (sp) => {
-      console.log(`sp: ${sp}`)
+
+    socket.on('users-in-lobby', (...sp) => {
+      console.log('sp', sp)
+      sp.map((p: IPlayer) => {
+        return {
+          self: p.id === socket.id,
+          isHost: p.isHost,
+          id: p.id,
+          name: p.name,
+          place: p.place
+        }
+      })
+      players.value = sp
       setupComplete.value = true
     })
-    socket.on('initialSettings', (settings) => {
-      hostSettings.value.winAmount = settings.winAmount
-      hostSettings.value.enableWise = settings.enableWise
+
+    socket.on('user-joined', (p: IPlayer) => {
+      const new_player = {
+        self: p.id === socket.id,
+        isHost: p.isHost,
+        id: p.id,
+        name: p.name,
+        place: p.place
+      }
+      players.value.push(new_player)
     })
+
     socket.on('abandoned', () => {
       nameInput.value = ''
       players.value = []

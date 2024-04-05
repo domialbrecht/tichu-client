@@ -23,7 +23,6 @@ export default defineComponent({
       navigator.clipboard.writeText(props.jkey)
     }
     const winAmount = ref(props.hostSettings.winAmount)
-    const enableWise = ref(props.hostSettings.enableWise)
     const playerToSwitch = ref<IPlayer>(PlayerPlaceholder)
     const switchInProgress = ref(false)
     const switchPlayer = (p: IPlayer) => {
@@ -40,16 +39,14 @@ export default defineComponent({
       emit('start')
     }
     const settingChanged = () => {
-      socket.emit('settingChanged', { winAmount: winAmount.value, enableWise: enableWise.value })
+      socket.emit('settingChanged', { winAmount: winAmount.value })
     }
     socket.on('newSettings', (settings) => {
       winAmount.value = settings.winAmount
-      enableWise.value = settings.enableWise
     })
     return {
       copyKey,
       winAmount,
-      enableWise,
       settingChanged,
       onStart,
       switchPlayer,
@@ -66,15 +63,6 @@ export default defineComponent({
         v-model="winAmount"
         :disabled="!isHost"
         class="mt-0 block px-0.5 text-darker text-xl text-center border-0 focus:ring-0 focus:border-white"
-        @change="settingChanged"
-      />
-      <label for="checkbox" class="text-3xl mr-6">Wise isch erloubt (WIP)</label>
-      <input
-        id="checkbox"
-        v-model="enableWise"
-        :disabled="true"
-        type="checkbox"
-        class="h-6 w-6 bg-white block appearance-none justify-self-center checked:bg-highlight"
         @change="settingChanged"
       />
     </div>

@@ -1,6 +1,5 @@
 export interface IHostSetting {
   winAmount: number
-  enableWise: boolean
 }
 
 export interface User {
