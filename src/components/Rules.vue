@@ -14,8 +14,8 @@ const types = RuleTypes
     <div class="container mx-auto mb-40 text-center">
       <h2 class="text-6xl uppercase text-emerald-900 mb-5">Weisch nid wie? Hie d Regle</h2>
       <p class="text-lg">
-        Nachfougend isch der Spiuablouf erklärt. Klick jewils uf d ?-Element für Tipps und
-        Spiubispiu. Die Regle si natürlech ou für z normale Jasse vor Ort awendbar.
+        Nachfougend isch der Spiuablouf erklärt. Klick uf d ?-Element für Tipps und Spiubispiu. Die
+        Regle si natürlech ou für z normale Tichu vor Ort awendbar.
       </p>
     </div>
     <div class="rulesSection py-20 px-10">
@@ -39,9 +39,9 @@ const types = RuleTypes
         <div class="w-1/3 js-animate-in animate-in-slideX-left">
           <h3 class="uppercase text-5xl mb-3 text-emerald-900 font-thin">Z Setup</h3>
           <p class="text-xl">
-            Zum spile vomene Schieber, so heisst die Jassart wo mir hie spile, bruchsch aus ersts
-            mau vier Lüt. Gjasset seuber wird ner i zwöier Teams. D Teammitglider sitze übers
-            Chrütz. Z Ziel vom Schieber isch vorem andere Team 1000 Pünkt z erreiche.
+            Zum spile vomene Schieber bruchsch aus ersts mau vier Lüt. Gspiut wird ner i zwöier
+            Teams. D Teammitglider sitze übers Chrütz. Z Ziel vom Tichu isch vorem andere Team 1000
+            Pünkt z erreiche.
           </p>
         </div>
       </div>
@@ -69,9 +69,23 @@ const types = RuleTypes
               </svg>
             </div>
           </div>
-          <div class="col-span-2 grid grid-cols-9 gap-1">
+          <div class="col-span-2 grid grid-cols-7 gap-1">
             <div
-              v-for="card in ['6', '7', '8', '9', '10', 'jack', 'queen', 'king', '1']"
+              v-for="card in [
+                '2',
+                '3',
+                '4',
+                '5',
+                '6',
+                '7',
+                '8',
+                '9',
+                '10',
+                'jack',
+                'queen',
+                'king',
+                '1'
+              ]"
               :key="card"
               class="bg-sky"
             >
@@ -82,16 +96,13 @@ const types = RuleTypes
           </div>
         </div>
         <div class="w-1/3 js-animate-in animate-in-slideX-left">
-          <h3 class="uppercase text-5xl mb-3 text-emerald-900 font-thin">D Jasscharte</h3>
+          <h3 class="uppercase text-5xl mb-3 text-emerald-900 font-thin">D Charte</h3>
           <p class="text-xl">
-            Es Jassdeck besteit us 36 Charte, ufteilt i vier verschideni Farbe. D Farbe vo links
-            nach rechts heisse:
-            <span class="font-thin">Härz, Egge, Schufle, Chrütz</span>. I jeder Farb si daher 9
-            Charte. Agfange bim 6i, 7ni, 8i, 9i
-            <span class="text-accent">(Näu)</span>
-            , zum 10ni ner der
-            <span class="font-thin">Buur, d Dame, der Chünig und z Ass</span>
-            .
+            Es Tichudeck besteit us de 52 Charte Pokercharte, ufteilt i vier verschideni Farbe, plus
+            vier spezielle Joker. Die Joker vo links nach rechts heisse:
+            <span class="font-thin">Eis, Hund, Phönix, Drache</span>. I jeder Farb si daher 9
+            Charte. Agfange bim 2i, 3ni, 4i, 5i bis zu Ass. Meh zur Spilwis u de Spezialcharte witer
+            unde.
           </p>
         </div>
       </div>
@@ -106,11 +117,12 @@ const types = RuleTypes
           </div>
         </div>
         <div class="ml-10 flex items-center">
-          <div class="cardPlaceholder">36</div>
-          <div>
+          <div class="cardPlaceholder">56</div>
+          <div class="text-center">
             <h4 class="uppercase text-xl mx-5">Charte mischle > verteile</h4>
+            <h4 class="uppercase text-xl mx-5">2x vier jedem, ner 2x drü jedem</h4>
           </div>
-          <div class="cardPlaceholder">9</div>
+          <div class="cardPlaceholder">14</div>
         </div>
         <div class="help">?</div>
       </div>
@@ -121,8 +133,8 @@ const types = RuleTypes
             <h4 class="uppercase text-xl">Start bestimme</h4>
           </div>
         </div>
-        <div class="ml-10 grid grid-flow-col gap-3" style="max-width: 70%">
-          <div v-for="n in 4" :key="n">
+        <div class="ml-10 grid grid-flow-col gap-1" style="max-width: 70%">
+          <div v-for="n in 6" :key="n">
             <svg class="w-full h-full" viewBox="0 0 169 245">
               <use :href="'/images/svg-cards.svg#back'" fill="#1E3A8A" />
             </svg>
@@ -132,7 +144,7 @@ const types = RuleTypes
               <use :href="'/images/svg-cards.svg#diamond_10'" fill="#1E3A8A" />
             </svg>
           </div>
-          <div v-for="n in 4" :key="n">
+          <div v-for="n in 7" :key="n">
             <svg class="w-full h-full" viewBox="0 0 169 245">
               <use :href="'/images/svg-cards.svg#back'" fill="#1E3A8A" />
             </svg>
@@ -144,7 +156,7 @@ const types = RuleTypes
     <div class="rulesSection rulesSectionDark p-20">
       <div class="help">?</div>
       <div class="js-animate-in animate-in-slideX-left">
-        <h3 class="uppercase text-5xl mb-3 text-dark font-thin">1/3 Jassart wählä</h3>
+        <h3 class="uppercase text-5xl mb-3 text-dark font-thin">Tichu asege</h3>
         <div class="flex justify-between items-center">
           <p class="text-xl text-dark">
             Nachem verteile muäs dä Spiler vo "Vorhand" het d Jassart bestimme. Ir erste Rundi isch
@@ -189,7 +201,7 @@ const types = RuleTypes
     <div class="rulesSection p-20">
       <div class="help">?</div>
       <div class="js-animate-in animate-in-slideX-left">
-        <h3 class="uppercase text-5xl mb-3 text-emerald-900 font-thin">2/3 Wisä</h3>
+        <h3 class="uppercase text-5xl mb-3 text-emerald-900 font-thin">Kombinatione</h3>
         <div class="flex justify-between items-center">
           <p class="text-xl text-emerald-900">
             Jede Spiler cha zum Zitpunkt vo sire erste Charte pro Rundi "Wisä". Vo Wisä redt me we e
