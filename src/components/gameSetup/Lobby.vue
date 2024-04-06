@@ -4,6 +4,7 @@ import { ref, defineComponent, inject, onBeforeMount } from 'vue'
 import Entry from './Entry.vue'
 import Waiting from './Waiting.vue'
 import { IPlayer, IHostSetting } from '~/types'
+import axios from 'axios'
 
 export default defineComponent({
   components: {
@@ -47,11 +48,14 @@ export default defineComponent({
           game_id: joinKey.value
         }
         socket.emit('connect-lobby', data)
+        joinKey.value = `${window.location.origin}/game?key=${joinKey.value}`
         //serverConnect(name, false, joinKey.value)
       }
     }
     const onStart = () => {
-      if (clientIsHost.value) socket.emit('startGame')
+      if (clientIsHost.value) {
+        axios.patch('http://localhost:3000/start&' + joinKey.value.split('key=')[1])
+      }
     }
     socket.on('started', () => {
       emit('gstart', players.value)
