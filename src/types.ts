@@ -40,6 +40,12 @@ export interface IPlayer {
   place: number
 }
 
+export interface IPlayerSwapTeam {
+  gameId: string
+  player1: string
+  player2: string
+}
+
 export interface ICard {
   id: number
   display: string

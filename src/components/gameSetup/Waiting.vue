@@ -3,7 +3,7 @@ import { Socket } from 'socket.io-client'
 import { ref, defineComponent, PropType, inject } from 'vue'
 import IconSwap from '~icons/mdi/swapHorizontal'
 import PlayerCard from '../helpers/PlayerCard.vue'
-import { IPlayer, IHostSetting } from '~/types'
+import { IPlayer, IHostSetting, type IPlayerSwapTeam } from '~/types'
 import { PlayerPlaceholder } from '~/defs'
 export default defineComponent({
   components: {
@@ -24,6 +24,7 @@ export default defineComponent({
     }
     const winAmount = ref(props.hostSettings.winAmount)
     const playerToSwitch = ref<IPlayer>(PlayerPlaceholder)
+    const playerSwapTeam = ref<IPlayerSwapTeam>()
     const switchInProgress = ref(false)
     const switchPlayer = (p: IPlayer) => {
       if (!switchInProgress.value) {
@@ -31,7 +32,9 @@ export default defineComponent({
         switchInProgress.value = true
         return
       }
-      socket.emit('swapplayerteam', playerToSwitch.value.id, p.id)
+      const gameId = props.jkey.split('key=')[1]
+      playerSwapTeam.value = { gameId: gameId, player1: playerToSwitch.value.id, player2: p.id }
+      socket.emit('player-swap-team', playerSwapTeam.value)
       switchInProgress.value = false
       playerToSwitch.value = PlayerPlaceholder
     }
@@ -82,7 +85,7 @@ export default defineComponent({
         <div>Läär</div>
       </div>
     </div>
-    <div v-if="isHost" class="flex justify-between w-full items-center">
+    <div v-if="players.length !== 4" class="flex justify-between w-full items-center">
       <div>
         <button
           class="px-8 py-3 text-2xl text-dark tracking-widest bg-highlight hover:bg-contrast uppercase border-0 rounded-4xl focus:ring-0 focus:outline-none"
@@ -91,16 +94,16 @@ export default defineComponent({
           Iladig kopiere
         </button>
       </div>
-      <button
-        v-if="players.length === 4"
-        class="cursor-pointer heroButton px-8 py-3 text-2xl text-dark relative tracking-widest bg-highlight hover:bg-contrast uppercase border-0 rounded-4xl focus:outline-none"
-        @click="onStart"
-      >
-        Starte
-      </button>
     </div>
-    <div v-else>
+    <div v-if="!isHost">
       <h3 class="text-3xl">Der Host wrid z Spiu starte</h3>
     </div>
+    <button
+      v-if="players.length === 4 && isHost"
+      class="cursor-pointer heroButton px-8 py-3 text-2xl text-dark relative tracking-widest bg-highlight hover:bg-contrast uppercase border-0 rounded-4xl focus:outline-none"
+      @click="onStart"
+    >
+      Starte
+    </button>
   </div>
 </template>
