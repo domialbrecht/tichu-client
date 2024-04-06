@@ -9,8 +9,8 @@ onUnmounted(() => socket.off('connect_error'))
 // you can use this to manipulate the document head in any components,
 // they will be rendered correctly in the html results with vite-ssg
 useHead({
-  title: 'Interism Jass',
-  meta: [{ name: 'description', content: 'Jasse Online' }]
+  title: 'Tichu',
+  meta: [{ name: 'description', content: 'Tichu Online' }]
 })
 </script>
 
