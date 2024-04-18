@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { setupScrollAnimations } from '~/helpers'
-import { RuleTypes } from '~/defs'
 
 onMounted(() => {
   setupScrollAnimations()
 })
 const activeType = ref('Obeabe')
-const types = RuleTypes
 </script>
 <template>
   <div class="relative mt-48">
@@ -171,21 +169,7 @@ const types = RuleTypes
       <div
         class="grid grid-flow-col gap-5 mt-12 js-animate-in-trigger"
         data-anmiate-in-stagger="200"
-      >
-        <div
-          v-for="type in types"
-          :key="type.name"
-          class="flex flex-col items-center js-animate-in-item animate-in-fade"
-        >
-          <div
-            class="w-full h-70 p-6 flex items-center justify-center text-dark text-8xl"
-            :class="type.color"
-          >
-            <component :is="type.icon"></component>
-          </div>
-          <span class="uppercase text-dark text-2xl mt-5">{{ type.name }}</span>
-        </div>
-      </div>
+      ></div>
     </div>
     <div class="rulesBetween">
       <div class="betweenLine absolute h-full w-1 bg-light"></div>
@@ -497,9 +481,11 @@ const types = RuleTypes
   justify-content: center;
   align-items: center;
 }
+
 .ruletype-enter-active {
   transition: transform 1s ease-out;
 }
+
 .ruletype-enter-from,
 .ruletype-leave-to {
   opacity: 0;

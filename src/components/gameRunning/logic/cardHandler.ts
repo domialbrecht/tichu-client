@@ -50,7 +50,7 @@ export default function useCardFunctions(
   const selfCanPlay = computed(() => {
     return self?.place === isTurnOfPlayerAtPlace.value
   })
-  socket.on('playerturn', (playerPlace: number) => {
+  socket.on('next-player', (playerPlace: number) => {
     isTurnOfPlayerAtPlace.value = playerPlace
   })
   socket.on('wrongCard', () => {
@@ -67,20 +67,13 @@ export default function useCardFunctions(
     }
     if (!evt.added || !evt.added.element || !instanceOfCard(evt.added.element)) return
     const card = evt.added.element as ICard
-    socket.emit('cardPlayed', card.id, self?.id)
+    //socket.emit('cardPlayed', card.id, self?.id)
   }
-  socket.on('cards', (cards: PlayedCard[]) => {
-    if (isTurnOfPlayerAtPlace.value === boardPlayers[1].place)
-      playerRightPlayedAmount.value = playerRightPlayedAmount.value + 1
-    else if (isTurnOfPlayerAtPlace.value === boardPlayers[2].place)
-      playerTopPlayedAmount.value = playerTopPlayedAmount.value + 1
-    else if (isTurnOfPlayerAtPlace.value === boardPlayers[3].place)
-      playerLeftPlayedAmount.value = playerLeftPlayedAmount.value + 1
-    otherPlayedCards.value = cards
-  })
 
-  socket.on('getCards', (cards: ICard[]) => {
+  socket.on('hand', (cards: ICard[]) => {
+    console.log('hand', cards)
     playerCards.value = cards
+    console.log('playerCards', playerCards.value)
     // After new cards are recieved, reset other player representation
     playerRightPlayedAmount.value = 0
     playerTopPlayedAmount.value = 0

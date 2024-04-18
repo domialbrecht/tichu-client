@@ -1,6 +1,5 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { WisTypes } from '~/defs'
 import IconStoeck from '~/components/helpers/WisStoeckIcon.vue'
 export default defineComponent({
   components: { IconStoeck },
@@ -12,11 +11,9 @@ export default defineComponent({
     const submitWis = () => {
       emit('send')
     }
-    const types = WisTypes
     return {
       selectType,
-      submitWis,
-      types
+      submitWis
     }
   }
 })
@@ -27,19 +24,6 @@ export default defineComponent({
   >
     <div class="container mx-auto z-10 text-dark">
       <div class="grid grid-cols-3 gap-4">
-        <div
-          v-for="type in types"
-          :key="type.name"
-          class="h-60 w-52 flex flex-col items-center p-4"
-        >
-          <span class="text-2xl uppercase">{{ type.name }}</span>
-          <button
-            class="flex items-center justify-center rounded-2xl w-full h-5/6 text-dark"
-            @click="selectType(type.name)"
-          >
-            <component :is="type.icon"></component>
-          </button>
-        </div>
         <div class="h-60 w-52 flex flex-col items-center p-4">
           <span class="text-2xl uppercase">Stoeck</span>
           <button

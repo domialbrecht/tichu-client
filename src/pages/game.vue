@@ -1,7 +1,7 @@
 <script lang="ts">
 import { ref, provide, onMounted, onUnmounted, defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
-import { IPlayer } from '~/types'
+import type { IPlayer } from '~/types'
 import Lobby from '~/components/gameSetup/Lobby.vue'
 import Boardwrapper from '~/components/gameRunning/BoardWrapper.vue'
 import socket from '~/api/socket'

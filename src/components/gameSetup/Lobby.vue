@@ -54,7 +54,12 @@ export default defineComponent({
     }
     const onStart = () => {
       if (clientIsHost.value) {
-        axios.patch('http://localhost:3000/start&' + joinKey.value.split('key=')[1])
+        const data = {
+          gameId: joinKey.value.split('key=')[1]
+        }
+        axios.patch('http://localhost:3000/start', data)
+        console.log(players.value)
+        emit('gstart', players.value)
       }
     }
     socket.on('started', () => {

@@ -1,6 +1,6 @@
 <script lang="ts">
 import { Socket } from 'socket.io-client'
-import { ref, defineComponent, PropType, inject } from 'vue'
+import { ref, defineComponent, type PropType, inject } from 'vue'
 import draggable from 'vuedraggable'
 import useCardFunctions from '../logic/cardHandler'
 import useTurnFunctions from '../logic/turnHandler'
@@ -12,7 +12,7 @@ import TypeSelector from './TypeSelector.vue'
 import SmallPlayer from './SmallPlayer.vue'
 import Finished from './Finished.vue'
 import PlayerCard from '~/components/helpers/PlayerCard.vue'
-import { IPlayer } from '~/types'
+import * as types from '~/types'
 
 export default defineComponent({
   components: {
@@ -25,7 +25,7 @@ export default defineComponent({
     Finished
   },
   props: {
-    players: { type: Array as PropType<Array<IPlayer>>, required: true }
+    players: { type: Array as PropType<Array<types.IPlayer>>, required: true }
   },
   setup(props) {
     // ==============================
@@ -38,12 +38,12 @@ export default defineComponent({
     // ==============================
     // Sync player places with server
     // ==============================
-    const shiftPlayers = (a: IPlayer[], amount: number) => {
+    const shiftPlayers = (a: types.IPlayer[], amount: number) => {
       if (a.length < 1) return a
       for (let index = 0; index < amount; index++) a.push(a.shift()!)
       return a
     }
-    const boardPlayers = ref<IPlayer[]>([])
+    const boardPlayers = ref<types.IPlayer[]>([])
     const self = props.players.find((p) => p.self)
     const selfPlace = self?.place
     boardPlayers.value = shiftPlayers([...props.players], selfPlace || 0)
@@ -103,11 +103,12 @@ export default defineComponent({
     // Player card functions
     // ==============================
     const sortCards = () => {
-      playerCards.value = playerCards.value.sort((c1, c2) => c1.id - c2.id)
+      console.log('implement sortCards')
     }
     const keyDownHandler = (e: KeyboardEvent) => {
       switch (e.code) {
         case 'KeyS':
+          console.log('playerCards', playerCards.value)
           sortCards()
           break
         default:
@@ -327,7 +328,7 @@ export default defineComponent({
             @click="selectCard(element)"
           >
             <svg class="h-full" viewBox="0 0 169 245">
-              <use :href="`/images/svg-cards.svg#${element.display}`" />
+              <use :href="`/images/svg-cards.svg#club_jack`" />
             </svg>
           </div>
         </template>
@@ -383,6 +384,7 @@ export default defineComponent({
       'player4Hand board player2Hand'
       'player4Icon player3Hand player3Icon';
   }
+
   .hideLarge {
     display: none;
   }
@@ -414,6 +416,7 @@ export default defineComponent({
   width: calc(177px * 0.8);
   height: calc(256px * 0.8);
   border-radius: 8px;
+
   @media (min-width: 1801px) and (min-height: 1100px) {
     width: auto;
     height: auto;
@@ -437,6 +440,7 @@ export default defineComponent({
   top: 50%;
   left: 30%;
   transform: translateY(-50%);
+
   @media (min-width: 1801px) and (min-height: 1100px) {
     transform: none;
     top: 5px;
@@ -448,6 +452,7 @@ export default defineComponent({
   top: 50%;
   right: 30%;
   transform: translateY(-50%);
+
   @media (min-width: 1801px) and (min-height: 1100px) {
     top: auto;
     transform: none;
@@ -458,9 +463,11 @@ export default defineComponent({
 
 .card-wrapper {
   width: calc(162px * 0.8);
+
   @media (min-width: 1480px) and (min-height: 1100px) {
     width: 162px;
   }
+
   position: relative;
   transition: all 0.3s;
 }
@@ -510,6 +517,7 @@ export default defineComponent({
   max-width: 162px;
   transition: all 0.2s ease;
 }
+
 .hand-enter-from,
 .hand-leave-to {
   max-width: 0;

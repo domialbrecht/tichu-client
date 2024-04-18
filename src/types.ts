@@ -11,20 +11,8 @@ export interface GameStats {
 }
 
 export enum TurnType {
-  UPDOWN = 'Obeabe',
-  DOWNUP = 'Undeufe',
-  SLALOM_UP = 'Slalom_up',
-  SLALOM_DOWN = 'Slalom_down',
-  T_HEART = 'Trumpf_heart',
-  T_DIAMOND = 'Trumpf_diamond',
-  T_SPADE = 'Trumpf_spade',
-  T_CLUB = 'Trumpf_club'
-}
-
-export enum WisType {
-  BLATT = 'blatt',
-  STOECK = 'stoeck',
-  SIMILAR = 'similar'
+  TICHU = 'tichu',
+  GRAND_TICHU = 'grand_tichu'
 }
 
 export enum Team {
@@ -47,11 +35,28 @@ export interface IPlayerSwapTeam {
 }
 
 export interface ICard {
-  id: number
-  display: string
-  value: number
-  suit: 'heart' | 'diamond' | 'spade' | 'club'
+  cardType: CardType
+  color?: 'Red' | 'Black' | 'Green' | 'Blue'
 }
+
+export type CardType =
+  | 'Dog'
+  | 'Mahjong'
+  | 'Two'
+  | 'Three'
+  | 'Four'
+  | 'Five'
+  | 'Six'
+  | 'Seven'
+  | 'Eight'
+  | 'Nine'
+  | 'Ten'
+  | 'Jack'
+  | 'Queen'
+  | 'King'
+  | 'Ace'
+  | 'Phoenix'
+  | 'Dragon'
 
 export interface ITeamSlots {
   r1: string | undefined
@@ -71,16 +76,4 @@ export type PlayedCard = {
   display: string
   place: number
   value: number
-}
-
-export type WisInfo = {
-  playerId: string
-  playerPlace: number
-  wise: number[]
-}
-
-export type WisDeclare = {
-  id: number
-  type: string
-  cards: ICard[]
 }
